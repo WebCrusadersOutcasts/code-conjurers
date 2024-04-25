@@ -6,9 +6,9 @@ export default function Home() {
   const toolsList = [
     {
       name: "Boston House Price Prection",
-      description: "Plottings of Crime locations and respective heat maps",
+      description: "Predicting housing prices ",
       link: "/spatial-analysis",
-      image: "/images/spatial_analysis.png",
+      image: "images/gulbarga.jpg",
     },
   ];
 
@@ -16,7 +16,7 @@ export default function Home() {
     <>
       <header style={{ padding: "10px 3px", height: "150px", textAlign: "center", background: "#35353f", color: "white", display: "flex", alignItems: "center", justifyContent: "center" }}>
         {/* <img src="/images/logo.png" alt="Logo" style={{ width: "100px", height: "auto", marginRight: "10px" }} /> */}
-        <Typography variant="h3" style={{ margin: "0" }}>Predictive Crime Analysis Tools</Typography>
+        <Typography variant="h3" style={{ margin: "0" }}>Predicting House Prices</Typography>
       </header>
       <Grid container spacing={2} style={{ padding: "20px" }}>
         {toolsList.map((el, index) => (
