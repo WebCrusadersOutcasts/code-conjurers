@@ -14,7 +14,22 @@ export default function Home() {
 
   return (
     <>
-      <header style={{ padding: "10px 3px", height: "150px", textAlign: "center", background: "#35353f", color: "white", display: "flex", alignItems: "center", justifyContent: "center" }}>
+      <style jsx>{`
+        @media (max-width: 960px) {
+          /* Styles for tablets */
+          header {
+            height: 100px;
+          }
+        }
+
+        @media (max-width: 600px) {
+          /* Styles for mobile devices */
+          header {
+            height: 80px;
+          }
+        }
+      `}</style>
+      <header style={{ padding: "10px 3px", textAlign: "center", background: "#35353f", color: "white", display: "flex", alignItems: "center", justifyContent: "center" }}>
         {/* <img src="/images/logo.png" alt="Logo" style={{ width: "100px", height: "auto", marginRight: "10px" }} /> */}
         <Typography variant="h3" style={{ margin: "5" }}>Predicting House Prices</Typography>
       </header>
