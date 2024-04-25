@@ -44,7 +44,7 @@ export default function Home() {
           ))}
         </Grid>
         <footer style={{ padding: "20px", textAlign: "center", background: "black", color: "white" }}>
-          <Typography variant="body1">&copy; Made By Web Crusaders </Typography>
+          <Typography variant="body1">&copy; Made By code conjurers </Typography>
         </footer>
       </div>
     </>
