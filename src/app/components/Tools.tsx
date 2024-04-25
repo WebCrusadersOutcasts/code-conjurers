@@ -9,10 +9,10 @@ interface ToolsCardProps {
 
 const ToolsCard: React.FC<ToolsCardProps> = ({ name, description, image }) => {
   return (
-    <Card sx={{ width: 400,height:500,marginLeft:3, marginBottom: 2 }}>
-      <CardMedia sx={{height: 300}}
+    <Card sx={{ width: 800,height:500,marginLeft:40, marginBottom: 2 }}>
+      <CardMedia sx={{height: 400 }}
         component="img"
-        height="140"
+        height="150"
         image={image}
         alt={`${name} image`}
       />
