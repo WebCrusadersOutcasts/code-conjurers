@@ -1,4 +1,4 @@
-"use client";
+"use client"
 import Link from "next/link";
 import ToolsCard from "./components/Tools";
 import { Grid, Typography } from "@mui/material";
