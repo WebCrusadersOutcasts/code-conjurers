@@ -1,51 +1,54 @@
 "use client";
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 const ModelPredictions: React.FC = () => {
-    const [predictions, setPredictions] = useState<any>(null);
-    const [loading, setLoading] = useState<boolean>(true);
-    const [error, setError] = useState<string | null>(null);
+    const [linearPredictions, setLinearPredictions] = useState<string[]>([]);
+    const [rfPredictions, setRfPredictions] = useState<string[]>([]);
+    const [linearMetrics, setLinearMetrics] = useState<string[]>([]);
+    const [rfMetrics, setRfMetrics] = useState<string[]>([]);
+    const [plotImage, setPlotImage] = useState<string>('');
 
     useEffect(() => {
-        // Fetch predictions from Flask API
-        fetch('https://sbrk.onrender.com/predictions')
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Failed to fetch predictions');
-                }
-                return response.json();
-            })
+        // Fetch predictions from Flask server
+        fetch('https://sbrk-s9hf.onrender.com/predictions')
+            .then(response => response.json())
             .then(data => {
-                setPredictions(data);
-                setLoading(false);
+                // Update state with fetched data
+                setLinearPredictions(data["Linear Regression Predictions"]);
+                setRfPredictions(data["Random Forest Regression Predictions"]);
+                setLinearMetrics(data["Linear Regression Metrics"]);
+                setRfMetrics(data["Random Forest Regression Metrics"]);
             })
-            .catch(error => {
-                setError(error.message);
-                setLoading(false);
-            });
-    }, []);
+            .catch(error => console.error('Error fetching predictions:', error));
 
-    if (loading) {
-        return <p>Loading...</p>;
-    }
-
-    if (error) {
-        return <p>Error: {error}</p>;
-    }
+        // Fetch plot image from Flask server
+        fetch('https://sbrk-s9hf.onrender.com/plot')
+            .then(response => response.json())
+            .then(data => {
+                // Update state with plot image data
+                setPlotImage(`data:image/png;base64, ${data.plot_image_base64}`);
+            })
+            .catch(error => console.error('Error fetching plot image:', error));
+    }, []); // Empty dependency array ensures useEffect only runs once
 
     return (
         <div>
             <h1>Model Predictions</h1>
-            <div id="predictions">
-                <h2>Linear Regression Predictions:</h2>
-                <p>{predictions && predictions["Linear Regression Predictions"]}</p>
-                <h2>Random Forest Regression Predictions:</h2>
-                <p>{predictions && predictions["Random Forest Regression Predictions"]}</p>
-                <h2>Linear Regression Metrics:</h2>
-                <p>MSE: {predictions && predictions["Linear Regression Metrics"]?.MSE}<br />R²: {predictions && predictions["Linear Regression Metrics"]?.["R²"]}</p>
-                <h2>Random Forest Regression Metrics:</h2>
-                <p>MSE: {predictions && predictions["Random Forest Regression Metrics"]?.MSE}<br />R²: {predictions && predictions["Random Forest Regression Metrics"]?.["R²"]}</p>
-            </div>
+
+            <h2>Linear Regression Predictions:</h2>
+            <div>{linearPredictions.join(', ')}</div>
+
+            <h2>Random Forest Regression Predictions:</h2>
+            <div>{rfPredictions.join(', ')}</div>
+
+            <h2>Linear Regression Metrics:</h2>
+            <div>{JSON.stringify(linearMetrics)}</div>
+
+            <h2>Random Forest Regression Metrics:</h2>
+            <div>{JSON.stringify(rfMetrics)}</div>
+
+            <h2>Model Comparison Plot:</h2>
+            <img src={plotImage} alt="Model Comparison Plot" style={{ width: '80%' }} />
         </div>
     );
 };
