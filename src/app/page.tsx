@@ -1,5 +1,6 @@
 import Link from "next/link";
 import ToolsCard from "./components/Tools";
+
 import { Grid, Typography } from "@mui/material";
 
 export default function Home() {
